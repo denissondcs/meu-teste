@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Plano de Treino em Casa — Formato A/B</title>
+<style>
+  @page {
+    size: A4;
+    margin: 20mm 16mm 22mm 16mm;
+    @bottom-center {
+      content: "Plano de Treino em Casa — A/B  •  página " counter(page) " de " counter(pages);
+      font-family: "Liberation Sans", Arial, sans-serif;
+      font-size: 8.5pt;
+      color: #8a8f98;
+    }
+  }
+  @page cover {
+    margin: 0;
+    @bottom-center { content: none; }
+  }
+
+  :root{
+    --ink: #1c2430;
+    --ink-soft: #4a5568;
+    --muted: #6b7280;
+    --line: #e2e5ea;
+    --paper: #ffffff;
+    --panel: #f5f6f8;
+    --brand: #0f6e5c;       /* verde-petróleo: força/saúde */
+    --brand-dark: #0a4f42;
+    --brand-soft: #e5f3ef;
+    --accent: #d95d39;      /* laranja queimado: energia/objetivo */
+    --accent-soft: #fbe9e2;
+    --gold: #b8862b;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; }
+  body {
+    font-family: "Liberation Sans", Arial, sans-serif;
+    color: var(--ink);
+    font-size: 10.3pt;
+    line-height: 1.45;
+  }
+  h1,h2,h3,h4 { font-family: "Liberation Sans", Arial, sans-serif; margin: 0; }
+
+  .section { page-break-before: always; }
+  .section:first-of-type { page-break-before: avoid; }
+
+  /* ---------- CAPA ---------- */
+  .cover {
+    page: cover;
+    width: 210mm;
+    height: 297mm;
+    background: linear-gradient(155deg, var(--brand-dark) 0%, var(--brand) 52%, #0d5a4b 100%);
+    color: #fff;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 24mm 18mm;
+  }
+  .cover .kicker {
+    letter-spacing: 3px;
+    font-size: 10pt;
+    text-transform: uppercase;
+    color: #bfe6da;
+    font-weight: bold;
+  }
+  .cover h1 {
+    font-size: 34pt;
+    line-height: 1.12;
+    margin-top: 10mm;
+    max-width: 140mm;
+  }
+  .cover .format-tag {
+    display: inline-block;
+    margin-top: 8mm;
+    background: rgba(255,255,255,0.14);
+    border: 1px solid rgba(255,255,255,0.4);
+    color: #fff;
+    padding: 3mm 6mm;
+    border-radius: 30px;
+    font-size: 11pt;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+  .cover-goal {
+    background: rgba(0,0,0,0.18);
+    border-left: 5px solid var(--accent);
+    padding: 6mm 7mm;
+    border-radius: 4px;
+    margin-top: 12mm;
+  }
+  .cover-goal .label { font-size: 8.5pt; text-transform: uppercase; letter-spacing: 2px; color: #ffd8c7; font-weight: bold; }
+  .cover-goal p { margin: 2mm 0 0 0; font-size: 12.5pt; line-height: 1.5; }
+  .cover-stats {
+    display: flex;
+    gap: 6mm;
+    margin-top: 10mm;
+    flex-wrap: wrap;
+  }
+  .stat-chip {
+    background: rgba(255,255,255,0.1);
+    border-radius: 6px;
+    padding: 4mm 5mm;
+    min-width: 34mm;
+  }
+  .stat-chip .n { font-size: 15pt; font-weight: bold; display:block; }
+  .stat-chip .l { font-size: 8pt; color: #cfeee3; text-transform: uppercase; letter-spacing: 1px; }
+  .cover-footer {
+    display:flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 1px solid rgba(255,255,255,0.25);
+    padding-top: 6mm;
+    font-size: 9pt;
+    color: #d9efe7;
+  }
+
+  /* ---------- TÍTULOS DE SEÇÃO ---------- */
+  .eyebrow {
+    color: var(--accent);
+    font-weight: bold;
+    font-size: 8.5pt;
+    letter-spacing: 2.2px;
+    text-transform: uppercase;
+    margin-bottom: 2mm;
+  }
+  h2.page-title {
+    font-size: 20pt;
+    color: var(--brand-dark);
+    border-bottom: 2.5px solid var(--brand);
+    padding-bottom: 3mm;
+    margin-bottom: 6mm;
+  }
+  h3.block-title {
+    font-size: 13pt;
+    color: var(--brand-dark);
+    margin: 5.5mm 0 2.5mm 0;
+  }
+  p.lead { color: var(--ink-soft); font-size: 10.5pt; }
+
+  /* ---------- CARDS / GRID ---------- */
+  .grid2 { display:flex; gap:6mm; page-break-inside: avoid; break-inside: avoid; }
+  .grid2 > div { flex:1; }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 4mm 6mm;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .card h4 { font-size: 10.5pt; color: var(--brand-dark); margin-bottom: 2mm; }
+  .card ul { margin: 1mm 0 0 0; padding-left: 4mm; }
+  .card li { margin-bottom: 1.2mm; }
+
+  .callout {
+    border: 1px solid var(--brand);
+    background: var(--brand-soft);
+    border-radius: 6px;
+    padding: 4.5mm 6mm;
+    margin: 4mm 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .callout .t { color: var(--brand-dark); font-weight: bold; font-size: 9.5pt; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.5mm; }
+
+  .callout.warn { border-color: var(--gold); background: #fbf3e2; }
+  .callout.warn .t { color: #8a6415; }
+  .callout.key { border-color: var(--accent); background: var(--accent-soft); }
+  .callout.key .t { color: #a5401f; }
+
+  /* ---------- CALENDÁRIO SEMANAL ---------- */
+  .week {
+    display: flex;
+    gap: 2.2mm;
+    margin: 3mm 0 2mm 0;
+  }
+  .day {
+    flex: 1;
+    text-align: center;
+    border-radius: 5px;
+    padding: 3mm 1mm;
+    font-size: 8.6pt;
+    color: #fff;
+  }
+  .day .d { display:block; font-size: 7.4pt; text-transform: uppercase; opacity: .85; margin-bottom: 1.5mm;}
+  .day .w { font-weight: bold; font-size: 9.6pt; }
+  .day.a { background: var(--brand); }
+  .day.b { background: var(--accent); }
+  .day.off { background: #cfd4db; color: #4a5568; }
+
+  /* ---------- FASES ---------- */
+  .phase-header {
+    display:flex;
+    align-items:center;
+    gap: 5mm;
+    margin-bottom: 5mm;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .phase-badge {
+    width: 15mm; height: 15mm;
+    border-radius: 50%;
+    background: var(--brand);
+    color: #fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size: 13pt; font-weight: bold;
+    flex-shrink: 0;
+  }
+  .phase-header h2 { border:none; padding:0; margin:0; font-size: 17pt; color: var(--brand-dark); }
+  .phase-header .sub { color: var(--muted); font-size: 9.5pt; }
+
+  table.workout {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 5mm;
+    font-size: 9.3pt;
+  }
+  table.workout th {
+    background: var(--brand-dark);
+    color: #fff;
+    text-align: left;
+    padding: 2.6mm 3mm;
+    font-size: 8.6pt;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  table.workout td {
+    padding: 2.6mm 3mm;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.workout tr:nth-child(even) td { background: var(--panel); }
+  table.workout tr { page-break-inside: avoid; break-inside: avoid; }
+  table.workout thead, table.workout tr:first-child { page-break-after: avoid; }
+  table.workout td.ex { font-weight: bold; color: var(--ink); width: 27%; }
+  table.workout td.num { white-space: nowrap; color: var(--brand-dark); font-weight: bold; width: 14%; }
+  table.workout td.rest { white-space: nowrap; width: 12%; color: var(--ink-soft); }
+
+  .workout-block {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin-bottom: 4mm;
+  }
+  .workout-title {
+    display:flex; align-items:center; gap: 3mm;
+    margin: 6mm 0 3mm 0;
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+  .workout-tag {
+    color:#fff; font-weight:bold; font-size: 11pt;
+    border-radius: 5px; padding: 2mm 5mm;
+  }
+  .workout-tag.a { background: var(--brand); }
+  .workout-tag.b { background: var(--accent); }
+  .workout-title .focus { color: var(--ink-soft); font-size: 9.8pt; }
+
+  ol.steps { padding-left: 5mm; margin: 2mm 0; }
+  ol.steps li { margin-bottom: 1.6mm; }
+
+  .checklist { list-style:none; padding:0; margin: 2mm 0; }
+  .checklist li { margin-bottom: 1.8mm; padding-left: 6mm; position: relative; }
+  .checklist li::before {
+    content: "✓";
+    position: absolute; left: 0; top: 0;
+    color: var(--brand); font-weight: bold;
+  }
+
+  .foot-note { color: var(--muted); font-size: 8.3pt; margin-top: 3mm; }
+  small.tiny { color: var(--muted); font-size: 8pt; }
+</style>
+</head>
+<body>
+
+<!-- ===================== CAPA ===================== -->
+<div class="cover">
+  <div>
+    <div class="kicker">Programa personalizado de treino</div>
+    <h1>Plano de Treino em Casa<br>Formato A / B</h1>
+    <div class="format-tag">4 sessões por semana · 45 minutos cada</div>
+
+    <div class="cover-goal">
+      <div class="label">Objetivo principal</div>
+      <p>Ganhar força suficiente para levantar sua esposa (55&nbsp;kg) no colo e carregá-la
+      por alguns segundos, com segurança e boa técnica — partindo de uma base sedentária,
+      de forma gradual e com baixo risco de lesão.</p>
+    </div>
+
+    <div class="cover-stats">
+      <div class="stat-chip"><span class="n">39</span><span class="l">anos</span></div>
+      <div class="stat-chip"><span class="n">68,5 kg</span><span class="l">peso atual</span></div>
+      <div class="stat-chip"><span class="n">173 cm</span><span class="l">altura</span></div>
+      <div class="stat-chip"><span class="n">12</span><span class="l">semanas (3 fases)</span></div>
+    </div>
+  </div>
+
+  <div class="cover-footer">
+    <div>Equipamento disponível:<br><strong>colchonete · 2 halteres de 6&nbsp;kg · 2 halteres de 5&nbsp;kg</strong></div>
+    <div style="text-align:right;">Nível: iniciante / sedentário<br><strong>Progressão gradual e segura</strong></div>
+  </div>
+</div>
+
+<!-- ===================== COMO FUNCIONA ===================== -->
+<div class="section">
+  <div class="eyebrow">Visão geral do programa</div>
+  <h2 class="page-title">Como este plano funciona</h2>
+
+  <p class="lead">O plano é dividido em <strong>duas sessões alternadas (A e B)</strong>, repetidas
+  4 vezes por semana, ao longo de <strong>3 fases de 4 semanas</strong> (12 semanas / ~3 meses).
+  Como seu equipamento de peso é limitado (halteres de até 6&nbsp;kg), a progressão de força não vem
+  apenas de aumentar o peso — ela vem de <strong>variações mais exigentes, tempo sob tensão, trabalho
+  unilateral e maior volume</strong>, exatamente os ingredientes que constroem a força funcional
+  necessária para agachar, dobrar o quadril e carregar peso com segurança.</p>
+
+  <div class="callout key">
+    <div class="t">Por que este plano vai te preparar para carregar sua esposa</div>
+    Levantar e carregar uma pessoa depende de 4 capacidades: <strong>força de pernas/glúteos</strong>
+    (agachar e ficar em pé com carga), <strong>força de posterior de coxa e lombar</strong> (dobrar o
+    quadril para se aproximar dela), <strong>pegada e costas</strong> (abraçar e sustentar) e
+    <strong>core estável</strong> (manter o tronco firme com peso assimétrico). Cada treino A e B
+    trabalha diretamente essas capacidades, e a Fase 3 inclui um exercício que simula o movimento exato
+    de agachar, abraçar e levantar.
+  </div>
+
+  <h3 class="block-title">Estrutura de cada sessão (45 min)</h3>
+  <div class="grid2">
+    <div class="card">
+      <h4>1. Aquecimento — 5 min</h4>
+      <p style="margin:0">Mobilidade articular + ativação (rotina fixa, veja página de Aquecimento).</p>
+    </div>
+    <div class="card">
+      <h4>2. Bloco principal — ~32 min</h4>
+      <p style="margin:0">5 a 7 exercícios de força, em sequência, com descanso indicado entre séries.</p>
+    </div>
+  </div>
+  <div class="grid2" style="margin-top:3mm;">
+    <div class="card">
+      <h4>3. Core / finalização — 5 min</h4>
+      <p style="margin:0">Exercícios de estabilidade (prancha, dead bug) para proteger a lombar.</p>
+    </div>
+    <div class="card">
+      <h4>4. Alongamento — 3 min</h4>
+      <p style="margin:0">Alongamentos leves da musculatura trabalhada no dia.</p>
+    </div>
+  </div>
+
+  <h3 class="block-title">Calendário semanal sugerido</h3>
+  <div class="week">
+    <div class="day a"><span class="d">Seg</span><span class="w">Treino A</span></div>
+    <div class="day b"><span class="d">Ter</span><span class="w">Treino B</span></div>
+    <div class="day off"><span class="d">Qua</span><span class="w">Descanso</span></div>
+    <div class="day a"><span class="d">Qui</span><span class="w">Treino A</span></div>
+    <div class="day b"><span class="d">Sex</span><span class="w">Treino B</span></div>
+    <div class="day off"><span class="d">Sáb</span><span class="w">Livre / caminhada leve</span></div>
+    <div class="day off"><span class="d">Dom</span><span class="w">Descanso</span></div>
+  </div>
+  <p class="foot-note">Se algum dia estiver muito cansado ou dolorido, pode inverter Seg/Ter ou usar Qua
+  como dia extra de descanso — o importante é manter 4 sessões e ao menos 1 dia de descanso entre a
+  segunda sessão da semana e a terceira, quando possível.</p>
+
+  <div class="callout warn">
+    <div class="t">Antes de começar</div>
+    Você descreve um estilo de vida sedentário no momento. É sempre recomendável passar por uma
+    avaliação médica antes de iniciar um novo programa de exercícios, especialmente após os 35 anos.
+    Comece pela Fase 1 mesmo se achar os exercícios fáceis — a adaptação de tendões e articulações é
+    mais lenta que a muscular, e pular etapas é a principal causa de lesão em iniciantes.
+  </div>
+</div>
+
+<!-- ===================== FASE 1 ===================== -->
+<div class="section" style="page-break-before: auto;">
+  <div class="phase-header">
+    <div class="phase-badge">1</div>
+    <div>
+      <h2>Fase 1 — Fundação</h2>
+      <div class="sub">Semanas 1 a 4 · foco em técnica, mobilidade e ativação muscular</div>
+    </div>
+  </div>
+  <p class="lead">Nesta fase o objetivo <strong>não é sofrer</strong>, é aprender o movimento correto e
+  criar o hábito de treinar 4x por semana. Use pesos leves conscientemente, priorize amplitude completa
+  e controle. Se um exercício doer (não confundir com cansaço muscular), pare e ajuste a amplitude.</p>
+
+  <div class="workout-block">
+  <div class="workout-title">
+    <span class="workout-tag a">TREINO A</span>
+    <span class="focus">Pernas, glúteos e core — padrão de agachamento</span>
+  </div>
+  <table class="workout">
+    <tr><th>Exercício</th><th>Séries x Reps</th><th>Descanso</th><th>Técnica / observação</th></tr>
+    <tr><td class="ex">Agachamento livre (peso corporal)</td><td class="num">3 x 12</td><td class="rest">45s</td><td>Pés na largura dos ombros, desça como se fosse sentar, joelhos alinhados com os pés.</td></tr>
+    <tr><td class="ex">Afundo alternado</td><td class="num">3 x 10 /perna</td><td class="rest">45s</td><td>Passo controlado, tronco ereto, joelho de trás quase toca o chão.</td></tr>
+    <tr><td class="ex">Elevação pélvica (ponte de glúteo)</td><td class="num">3 x 15</td><td class="rest">30s</td><td>Aperte o glúteo com força no topo, segure 1-2s.</td></tr>
+    <tr><td class="ex">Panturrilha em pé (com 2 halteres de 6 kg)</td><td class="num">3 x 15</td><td class="rest">30s</td><td>Suba devagar, desça em 2s controlados.</td></tr>
+    <tr><td class="ex">Prancha frontal</td><td class="num">3 x 20-30s</td><td class="rest">30s</td><td>Abdômen contraído, quadril alinhado ao corpo (sem "cair" nem subir demais).</td></tr>
+  </table>
+  </div>
+
+  <div class="workout-block">
+  <div class="workout-title">
+    <span class="workout-tag b">TREINO B</span>
+    <span class="focus">Costas, ombros e transporte de carga</span>
+  </div>
+  <table class="workout">
+    <tr><th>Exercício</th><th>Séries x Reps</th><th>Descanso</th><th>Técnica / observação</th></tr>
+    <tr><td class="ex">Levantamento terra romeno (halteres 6 kg)</td><td class="num">3 x 10</td><td class="rest">45s</td><td>Quadril vai para trás, halteres deslizam perto das pernas, costas retas — este é o padrão-base para "abaixar até ela".</td></tr>
+    <tr><td class="ex">Remada curvada (halteres 6 kg)</td><td class="num">3 x 12</td><td class="rest">45s</td><td>Tronco a ~45°, cotovelos junto ao corpo, aperte as escápulas no topo.</td></tr>
+    <tr><td class="ex">Flexão de braço (apoiado nos joelhos se precisar)</td><td class="num">3 x 8-12</td><td class="rest">45s</td><td>Corpo alinhado, desça até quase tocar o chão.</td></tr>
+    <tr><td class="ex">Desenvolvimento de ombro (halteres 5 kg)</td><td class="num">3 x 12</td><td class="rest">30s</td><td>Sentado ou em pé, evite arquear a lombar.</td></tr>
+    <tr><td class="ex">Farmer's Carry (transporte de carga)</td><td class="num">3 x 20-30s</td><td class="rest">45s</td><td>Segure um halter em cada mão, ombros para trás, ande com passos curtos e firmes — treina exatamente a postura de quem carrega peso.</td></tr>
+  </table>
+  <p class="foot-note">Faça o aquecimento padrão antes e o alongamento final depois de cada treino (ver página dedicada).</p>
+  </div>
+</div>
+
+<!-- ===================== FASE 2 ===================== -->
+<div class="section" style="page-break-before: auto;">
+  <div class="phase-header">
+    <div class="phase-badge">2</div>
+    <div>
+      <h2>Fase 2 — Construção de Força</h2>
+      <div class="sub">Semanas 5 a 8 · mais volume, exercícios unilaterais e tempo controlado</div>
+    </div>
+  </div>
+  <p class="lead">Como o peso dos halteres não aumenta, a dificuldade agora vem de três fontes:
+  <strong>exercícios unilaterais</strong> (uma perna/braço de cada vez — dobra a carga relativa),
+  <strong>tempo sob tensão</strong> (descidas de 3-4 segundos) e <strong>mais séries/repetições</strong>.</p>
+
+  <div class="workout-block">
+  <div class="workout-title">
+    <span class="workout-tag a">TREINO A</span>
+    <span class="focus">Pernas, glúteos e core — força unilateral</span>
+  </div>
+  <table class="workout">
+    <tr><th>Exercício</th><th>Séries x Reps</th><th>Descanso</th><th>Técnica / observação</th></tr>
+    <tr><td class="ex">Agachamento Goblet (1 halter de 6 kg junto ao peito)</td><td class="num">4 x 12</td><td class="rest">45s</td><td>Cotovelos passam por dentro dos joelhos na descida, tronco ereto.</td></tr>
+    <tr><td class="ex">Afundo búlgaro (pé de trás apoiado no sofá)</td><td class="num">3 x 10 /perna</td><td class="rest">60s</td><td>Sem peso na primeira semana; depois segure 2 halteres de 5 kg. Joelho da frente não ultrapassa a ponta do pé.</td></tr>
+    <tr><td class="ex">Ponte de glúteo unilateral</td><td class="num">3 x 10 /perna</td><td class="rest">45s</td><td>Uma perna estendida no ar, quadril nivelado.</td></tr>
+    <tr><td class="ex">Agachamento isométrico na parede (wall sit)</td><td class="num">3 x 30-40s</td><td class="rest">45s</td><td>Coxas paralelas ao chão, costas apoiadas na parede.</td></tr>
+    <tr><td class="ex">Prancha com toque no ombro</td><td class="num">3 x 30s</td><td class="rest">30s</td><td>Quadril o mais parado possível ao tocar cada ombro.</td></tr>
+  </table>
+  </div>
+
+  <div class="workout-block">
+  <div class="workout-title">
+    <span class="workout-tag b">TREINO B</span>
+    <span class="focus">Posterior de coxa, costas e carregamento</span>
+  </div>
+  <table class="workout">
+    <tr><th>Exercício</th><th>Séries x Reps</th><th>Descanso</th><th>Técnica / observação</th></tr>
+    <tr><td class="ex">RDL unilateral (halter 5-6 kg, apoio de equilíbrio se precisar)</td><td class="num">3 x 8 /perna</td><td class="rest">60s</td><td>Fundamental para equilíbrio e força ao dobrar o quadril com carga assimétrica.</td></tr>
+    <tr><td class="ex">Remada unilateral apoiada (halter 6 kg)</td><td class="num">3 x 12 /lado</td><td class="rest">45s</td><td>Apoie a mão livre num banco/cadeira, puxe o cotovelo para trás.</td></tr>
+    <tr><td class="ex">Flexão de braço com descida lenta (3s)</td><td class="num">3 x 10-15</td><td class="rest">45s</td><td>Controle total na descida, sobe normal.</td></tr>
+    <tr><td class="ex">Desenvolvimento de ombro (halteres 5 kg)</td><td class="num">4 x 10</td><td class="rest">45s</td><td>Aumente 1 série em relação à Fase 1.</td></tr>
+    <tr><td class="ex">Farmer's Carry com pausa</td><td class="num">3 rounds</td><td class="rest">60s</td><td>Segure parado 20s + caminhe 20s com os 4 halteres (~22 kg no total).</td></tr>
+    <tr><td class="ex">Dead bug (core anti-extensão)</td><td class="num">3 x 10 /lado</td><td class="rest">30s</td><td>Lombar sempre encostada no chão — protege a coluna sob carga.</td></tr>
+  </table>
+  </div>
+</div>
+
+<!-- ===================== FASE 3 ===================== -->
+<div class="section" style="page-break-before: auto;">
+  <div class="phase-header">
+    <div class="phase-badge">3</div>
+    <div>
+      <h2>Fase 3 — Força Funcional</h2>
+      <div class="sub">Semanas 9 a 12 · preparação direta para levantar e carregar</div>
+    </div>
+  </div>
+  <p class="lead">Esta fase introduz o exercício mais importante do plano para o seu objetivo: o
+  <strong>"Levantamento e Abraço"</strong>, que treina o padrão motor exato de agachar, abraçar um peso
+  junto ao corpo, levantar com as pernas e caminhar segurando-o.</p>
+
+  <div class="workout-block">
+  <div class="workout-title">
+    <span class="workout-tag a">TREINO A</span>
+    <span class="focus">Pernas e core — carga progressiva</span>
+  </div>
+  <table class="workout">
+    <tr><th>Exercício</th><th>Séries x Reps</th><th>Descanso</th><th>Técnica / observação</th></tr>
+    <tr><td class="ex">Agachamento Goblet com pausa de 2s embaixo</td><td class="num">4 x 12</td><td class="rest">45s</td><td>A pausa aumenta muito a exigência de força nas pernas mesmo com pouco peso.</td></tr>
+    <tr><td class="ex">Afundo búlgaro carregado (2 halteres de 6 kg)</td><td class="num">4 x 8 /perna</td><td class="rest">60s</td><td>Se dominar bem, experimente o agachamento pistol assistido (apoiando as mãos numa cadeira).</td></tr>
+    <tr><td class="ex">Ponte de glúteo unilateral com halter no quadril</td><td class="num">3 x 12 /perna</td><td class="rest">45s</td><td>Apoie um halter de 5-6 kg sobre o quadril.</td></tr>
+    <tr><td class="ex">Subida no step/banco (step-up) com halteres</td><td class="num">3 x 10 /perna</td><td class="rest">60s</td><td>Simula o momento de "ficar em pé" já com peso nos braços — movimento-chave para o objetivo final.</td></tr>
+    <tr><td class="ex">Prancha longa</td><td class="num">3 x 45-60s</td><td class="rest">30s</td><td>Meta da fase: chegar a 60s com boa forma.</td></tr>
+  </table>
+  </div>
+
+  <div class="workout-block">
+  <div class="workout-title">
+    <span class="workout-tag b">TREINO B</span>
+    <span class="focus">Padrão de levantar e carregar</span>
+  </div>
+  <table class="workout">
+    <tr><th>Exercício</th><th>Séries x Reps</th><th>Descanso</th><th>Técnica / observação</th></tr>
+    <tr><td class="ex">RDL bilateral com tempo lento (4s descida)</td><td class="num">4 x 10</td><td class="rest">60s</td><td>Use os 2 halteres de 6 kg juntos.</td></tr>
+    <tr><td class="ex"><strong>Levantamento e Abraço</strong> (bear hug lift)</td><td class="num">4 x (10-20s de pé)</td><td class="rest">90s</td><td>Agache segurando uma mochila com 10-20 kg (livros, garrafas de água) junto ao peito, suba usando as pernas, fique em pé 10-20s e dê alguns passos. Veja detalhes na próxima página.</td></tr>
+    <tr><td class="ex">Remada curvada (2 halteres de 6 kg, tempo lento)</td><td class="num">4 x 12</td><td class="rest">45s</td><td>Foque na contração das costas — é o que dá suporte ao "abraço".</td></tr>
+    <tr><td class="ex">Farmer's Carry longo</td><td class="num">3 x 40-60s</td><td class="rest">60s</td><td>Com os 4 halteres (~22 kg), meta de chegar a 60s contínuos.</td></tr>
+    <tr><td class="ex">Circuito Prancha + Dead bug</td><td class="num">3 rounds</td><td class="rest">30s</td><td>30s de prancha + 10 dead bugs por lado, sem descanso entre os dois.</td></tr>
+  </table>
+  </div>
+</div>
+
+<!-- ===================== AQUECIMENTO / ALONGAMENTO ===================== -->
+<div class="section">
+  <div class="eyebrow">Rotina fixa · use em todos os treinos</div>
+  <h2 class="page-title">Aquecimento e alongamento</h2>
+
+  <div class="grid2">
+    <div>
+      <h3 class="block-title">Aquecimento (5 min, antes do treino)</h3>
+      <ol class="steps">
+        <li>Polichinelos ou marcha no lugar — 1 min</li>
+        <li>Círculos de braço (frente e trás) — 20 cada direção</li>
+        <li>Rotação de quadril (mãos na cintura) — 10 cada direção</li>
+        <li>Agachamento livre sem peso, bem devagar — 10 repetições</li>
+        <li>Prancha curta de ativação — 15-20s</li>
+      </ol>
+    </div>
+    <div>
+      <h3 class="block-title">Alongamento final (3-5 min, depois do treino)</h3>
+      <ol class="steps">
+        <li>Alongamento de posterior de coxa (sentado, tronco à frente) — 30s cada perna</li>
+        <li>Alongamento de quadríceps em pé — 30s cada perna</li>
+        <li>Alongamento de peito no batente de porta — 30s cada lado</li>
+        <li>Alongamento de costas (postura de criança / gato-camelo) — 30-45s</li>
+        <li>Respiração profunda (3-5 ciclos) para relaxar</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="t">Dica de progressão contínua</div>
+    Quando os halteres de 5-6 kg começarem a ficar leves demais para um exercício, não pule etapas —
+    aumente antes: (1) repetições, (2) tempo sob tensão (descidas mais lentas), (3) troque para a
+    versão unilateral do exercício. Só depois disso considere comprar halteres mais pesados ou usar uma
+    mochila com peso (livros/garrafas de água) para sobrecarga adicional.
+  </div>
+</div>
+
+<!-- ===================== PROTOCOLO DE LEVANTAMENTO ===================== -->
+<div class="section">
+  <div class="eyebrow">O grande objetivo</div>
+  <h2 class="page-title">Protocolo para carregar sua esposa com segurança</h2>
+
+  <p class="lead">Não tente o levantamento real até estar consistentemente confortável com os pontos
+  abaixo (geralmente ao final da Fase 3, por volta da semana 12). Isso garante que você tenha base
+  suficiente para fazer o movimento sem comprometer a lombar.</p>
+
+  <h3 class="block-title">Checklist antes de tentar</h3>
+  <ul class="checklist">
+    <li>Agachamento Goblet: 4 séries de 15 repetições com boa forma e sem dor</li>
+    <li>RDL unilateral: 3 séries de 10 por perna, com equilíbrio estável</li>
+    <li>Farmer's Carry: 60 segundos contínuos carregando os 4 halteres (~22 kg)</li>
+    <li>Prancha frontal: 60 segundos com boa forma</li>
+    <li>Exercício "Levantamento e Abraço" com mochila de 20-25 kg: confortável, sem dor lombar, por 3-4 semanas seguidas</li>
+  </ul>
+
+  <h3 class="block-title">Técnica segura de levantamento (bridal / abraço)</h3>
+  <ol class="steps">
+    <li>Fique de frente para ela, pés afastados na largura dos ombros, bem próximo do corpo dela.</li>
+    <li>Agache dobrando <strong>quadril e joelhos</strong> — nunca curve a coluna para se abaixar.</li>
+    <li>Peça que ela abrace seu pescoço/ombros, aproximando o peso do seu centro de massa (quanto
+    mais perto do seu corpo, muito mais fácil é sustentar o peso).</li>
+    <li>Passe um braço sob as coxas dela e o outro nas costas (estilo "colo"), ou, alternativamente,
+    peça que ela cruze as pernas na sua cintura em um abraço frontal.</li>
+    <li>Levante <strong>usando a força das pernas</strong>, expire durante o esforço, mantenha o
+    abdômen contraído e o tronco o mais ereto possível.</li>
+    <li>Dê alguns passos curtos e controlados.</li>
+    <li>Para abaixar, dobre os joelhos novamente com controle — nunca incline apenas o tronco.</li>
+  </ol>
+
+  <div class="callout warn">
+    <div class="t">Importante</div>
+    Pratique o padrão de movimento primeiro com uma mochila carregada ou objeto de peso semelhante
+    (20-25 kg) antes de tentar com sua esposa, e só aumente para o peso total dela quando esse teste
+    estiver confortável. Combine com ela um sinal simples para ser colocada no chão a qualquer momento,
+    e evite qualquer torção da coluna enquanto estiver com peso nos braços.
+  </div>
+</div>
+
+<!-- ===================== DIRETRIZES GERAIS ===================== -->
+<div class="section">
+  <div class="eyebrow">Para o sucesso do plano</div>
+  <h2 class="page-title">Diretrizes gerais</h2>
+
+  <div class="grid2">
+    <div class="card">
+      <h4>Recuperação</h4>
+      <ul>
+        <li>Durma de 7 a 8 horas por noite</li>
+        <li>Nos dias de descanso, uma caminhada leve é bem-vinda</li>
+        <li>Se sentir dor articular (não confundir com cansaço muscular), reduza a carga/volume</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Alimentação</h4>
+      <ul>
+        <li>Priorize proteína ao longo do dia (~1,6 a 2 g por kg de peso corporal)</li>
+        <li>Mantenha boa hidratação, principalmente nos dias de treino</li>
+        <li>Sem necessidade de dietas restritivas para este objetivo</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="block-title">Sinais de alerta — pare e reavalie se:</h3>
+  <ul class="checklist">
+    <li>Sentir dor aguda ou "pontada" (diferente do cansaço muscular normal)</li>
+    <li>Tiver dor lombar que persiste após o treino</li>
+    <li>Sentir tontura, falta de ar excessiva ou dor no peito</li>
+    <li>A dor muscular não melhorar após 3-4 dias de descanso</li>
+  </ul>
+
+  <h3 class="block-title">Próximos passos após este plano</h3>
+  <p>Ao final das 12 semanas, você deve conseguir realizar o levantamento com boa técnica. A partir
+  daí, o plano pode evoluir para incluir outros objetivos (como você mencionou), aumento de carga com
+  equipamento adicional (halteres ajustáveis, barra de porta para dorsais, faixas elásticas) e treinos
+  de maior intensidade.</p>
+
+  <p class="foot-note" style="margin-top:8mm;">Plano elaborado com base nas informações fornecidas
+  (39 anos, 68,5 kg, 173 cm, sedentário, equipamento: colchonete + halteres de 5 kg e 6 kg). Ajuste
+  conforme sua evolução e sensações durante os treinos.</p>
+</div>
+
+</body>
+</html>
